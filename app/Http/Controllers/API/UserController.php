@@ -15,9 +15,14 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class UserController extends Controller
 {
     use ApiResponse;
+
     public function show(Request $request)
     {
         $user = JWTAuth::authenticate($request->bearerToken());
-        return $this->success($user,"Welcome ". $user->name);
+        if (!$user) return $this->error(401, 'Authorization Token not found');
+        $data = $user;
+        $data['avatar'] = $user->getAvatar();
+        unset($data['media']);
+        return $this->success($data, "Welcome " . $user->name);
     }
 }

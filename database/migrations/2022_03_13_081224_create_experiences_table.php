@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('experiences', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('game_id')->constrained('games')->onUpdate('cascade');
             $table->foreignUuid('user_id')->constrained('users')->onUpdate('cascade');
             $table->bigInteger('total')->default(0);
             $table->timestamps();

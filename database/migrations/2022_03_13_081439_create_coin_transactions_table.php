@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('coin_transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained('users')->onUpdate('cascade');
+            $table->foreignUuid('coin_id')->constrained()->onUpdate('cascade');
             $table->bigInteger('total')->default(0);
             $table->timestamps();
             $table->softDeletes();

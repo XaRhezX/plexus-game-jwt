@@ -37,19 +37,28 @@
             </div>
             @endif
 
-            <form action="{{ route('profile.update') }}" method="POST" class="card" autocomplete="off">
+            <form action="{{ route('profile.update') }}" method="POST" class="card" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 <div class="card-body">
 
+                    <span class="avatar avatar-xl mb-3 avatar-rounded" style="background-image: url({{ Auth()->user()->getAvatar() }})"></span>
+
+                    <div class="mb-3">
+                        <div class="form-label">Upload Avatar</div>
+                        <input type="file" name="image" class="form-control">
+                    </div>
+                    @error('image')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
 
                     <div class="mb-3">
                         <label class="form-label required">{{ __('Name') }}</label>
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required>                        
+                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required>
                     </div>
                     @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
 
                     <div class="mb-3">

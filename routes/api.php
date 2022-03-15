@@ -6,6 +6,10 @@ use App\Http\Controllers\API\Auth\LogoutController;
 use App\Http\Controllers\API\Auth\PasswordResetRequestController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CoinController;
+use App\Http\Controllers\API\ExperienceController;
+use App\Http\Controllers\API\GameController;
+use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +40,19 @@ Route::prefix('auth')->group(function(){
 
     Route::group(['middleware' => ['jwt.verify']], function () {
         Route::post('logout', [LogoutController::class, 'handle'])->middleware('jwt.refresh');
-        Route::post('me', [UserController::class, 'show']);
     });
+});
+
+Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::get('me', [UserController::class, 'show']);
+    Route::post('profile', [ProfileController::class, 'store']);
+
+    Route::get('coin', [CoinController::class, 'show']);
+    Route::post('coin', [CoinController::class, 'store']);
+
+    Route::get('experience', [ExperienceController::class, 'show']);
+    Route::post('experience', [ExperienceController::class, 'store']);
+
+    Route::get('game', [GameController::class, 'index']);
+    Route::get('game/{game}', [GameController::class, 'show']);
 });

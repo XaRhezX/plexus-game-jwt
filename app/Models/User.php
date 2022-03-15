@@ -6,14 +6,18 @@ use App\Traits\HasUuid;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, HasMedia
 {
     use HasApiTokens, HasFactory, Notifiable, HasUuid;
+    use InteractsWithMedia;
 
 
 
@@ -79,7 +83,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function Coins(): HasMany
     {
-        return $this->hasMany(Coin::class);
+        return $this->HasMany(Coin::class);
     }
 
     /**
@@ -89,7 +93,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function CoinTransactions(): HasMany
     {
-        return $this->hasMany(CoinTransactions::class);
+        return $this->hasMany(CoinTransaction::class);
     }
 
     /**
@@ -97,9 +101,9 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function Experiences(): HasMany
+    public function Experience(): HasMany
     {
-        return $this->hasMany(Experience::class);
+        return $this->HasMany(Experience::class);
     }
 
     /**
@@ -110,5 +114,13 @@ class User extends Authenticatable implements JWTSubject
     public function ExperienceTransactions(): HasMany
     {
         return $this->hasMany(ExperienceTransaction::class);
+    }
+
+
+    public function getAvatar(){
+        if($this->getMedia()->count() > 0)
+            return $this->getMedia()->last()->original_url;
+
+        return "https://eu.ui-avatars.com/api/?name=" . urlencode($this->name);
     }
 }

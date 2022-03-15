@@ -39,7 +39,9 @@ class RegisterController extends Controller
         if ($this->token) {
             return (new LoginController)->handle($request);
         }
-
-        return $this->success($user);
+        $data = $user;
+        $data['avatar'] = $user->getAvatar();
+        unset($data['media']);
+        return $this->success($data);
     }
 }
