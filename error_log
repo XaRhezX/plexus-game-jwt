@@ -1,0 +1,4 @@
+[16-Mar-2022 14:51:31 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\API\LeaderboardController::getLeaderboardExp() in /home/kodepedia/plexus-game-jwt/app/Http/Controllers/API/LeaderboardController.php on line 46
+[16-Mar-2022 14:51:35 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\API\LeaderboardController::getLeaderboardExpByGame() in /home/kodepedia/plexus-game-jwt/app/Http/Controllers/API/LeaderboardController.php on line 55
+[16-Mar-2022 16:14:49 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\API\HitStatController::lastDay() in /home/kodepedia/plexus-game-jwt/app/Http/Controllers/API/HitStatController.php on line 27
+[16-Mar-2022 16:17:07 UTC] PHP Fatal error:  Cannot redeclare App\Http\Controllers\API\HitStatController::lastWeek() in /home/kodepedia/plexus-game-jwt/app/Http/Controllers/API/HitStatController.php on line 39

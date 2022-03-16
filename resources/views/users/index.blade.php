@@ -19,6 +19,8 @@
                             <tr>
                                 <th>{{ __('Name') }}</th>
                                 <th>{{ __('Email Address') }}</th>
+                                <th>{{ __('Total Coin') }}</th>
+                                <th>{{ __('Total Experience') }}</th>
                                 <th>{{ __('Created at') }}</th>
                                 <th>{{ __('Updated in') }}</th>
                             </tr>
@@ -28,6 +30,8 @@
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>{{ number_format($user->coins_sum_total) }}</td>
+                                <td>{{ number_format($user->experiences_sum_total) }}</td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at->diffForhumans() }}</td>
                             </tr>

@@ -24,11 +24,13 @@ class JwtMiddleware extends BaseMiddleware
      */
     public function handle($request, Closure $next)
     {
+        //$user = JWTAuth::authenticate($request->bearerToken());
+        //if (!$user) return $this->error(401, 'Authorization Token not found');
         try {
             $user = JWTAuth::parseToken()->authenticate();
             $payload = \Tymon\JWTAuth\Facades\JWTAuth::getPayload($request->bearerToken());
             JWTAuth::getBlacklist()->has($payload);
-            //dd($payload);
+
         } catch (Exception $e) {
             if ($e instanceof TokenInvalidException) {
                 return $this->error(401, 'Token is Invalid');

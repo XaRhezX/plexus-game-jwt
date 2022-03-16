@@ -16,13 +16,11 @@ class UserController extends Controller
 {
     use ApiResponse;
 
-    public function show(Request $request)
+    public function show()
     {
-        $user = JWTAuth::authenticate($request->bearerToken());
-        if (!$user) return $this->error(401, 'Authorization Token not found');
-        $data = $user;
-        $data['avatar'] = $user->getAvatar();
+        $data = auth()->user();
+        $data['avatar'] = $data->getAvatar();
         unset($data['media']);
-        return $this->success($data, "Welcome " . $user->name);
+        return $this->success($data, "Welcome " . $data->name);
     }
 }

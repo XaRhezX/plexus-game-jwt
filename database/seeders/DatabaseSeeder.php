@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             GameSeeder::class,
             CoinSeeder::class,
             ExperienceSeeder::class,
+            RestApiLogSeeder::class,
         ]);
     }
 }

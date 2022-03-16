@@ -101,7 +101,7 @@ class User extends Authenticatable implements JWTSubject, HasMedia
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function Experience(): HasMany
+    public function Experiences(): HasMany
     {
         return $this->HasMany(Experience::class);
     }

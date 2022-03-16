@@ -15,23 +15,14 @@ class ExperienceController extends Controller
 {
     use ApiResponse;
 
-    public function show(Request $request)
+    public function show()
     {
-        $user = JWTAuth::authenticate($request->bearerToken());
-        if (!$user) return $this->error(401, 'Authorization Token not found');
-
-        $coins = Experience::with(['ExperienceTransactions'])->whereUserId($user->id)->get()->makeHidden(['user_id', 'id', 'created_at']);
-        $data = collect([
-            'experience' => $coins
-        ]);
-        return $this->success($data);
+        $experience = Experience::with(['ExperienceTransactions'])->whereUserId(Auth()->id())->get()->makeHidden(['user_id', 'id', 'created_at']);
+        return $this->success($experience);
     }
 
     public function store(Request $request)
     {
-        $user = JWTAuth::authenticate($request->bearerToken());
-        if (!$user) return $this->error(401, 'Authorization Token not found');
-
         $validator = Validator::make(
             $request->all(),
             [
@@ -54,11 +45,8 @@ class ExperienceController extends Controller
             'total' => $request->experience
         ]);
 
-        $coins = Experience::with(['ExperienceTransactions'])->whereUserId($user->id)->get()->makeHidden(['user_id', 'id', 'created_at']);
-        $data = collect([
-            'experience' => $coins
-        ]);
-        return $this->success($data);
+        $experience = Experience::with(['ExperienceTransactions'])->whereUserId(Auth()->id())->get()->makeHidden(['user_id', 'id', 'created_at']);
+        return $this->success($experience);
     }
 }
 

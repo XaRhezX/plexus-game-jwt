@@ -14,9 +14,6 @@ class ProfileController extends Controller
     use ApiResponse;
 
     public function store(Request $request){
-        $user = JWTAuth::authenticate($request->bearerToken());
-        if (!$user) return $this->error(401, 'Authorization Token not found');
-
         $validator = Validator::make(
             $request->all(),
             [

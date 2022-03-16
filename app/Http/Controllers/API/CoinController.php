@@ -15,22 +15,13 @@ class CoinController extends Controller
 {
     use ApiResponse;
 
-    public function show(Request $request){
-        $user = JWTAuth::authenticate($request->bearerToken());
-        if (!$user) return $this->error(401, 'Authorization Token not found');
-
-        $coins = Coin::with(['CoinTransactions'])->whereUserId($user->id)->get()->makeHidden(['user_id','id', 'created_at']);
-        $data = collect([
-            'coin' => $coins
-        ]);
-        return $this->success($data);
+    public function show(){
+        $coins = Coin::with(['CoinTransactions'])->whereUserId(Auth()->id())->get()->makeHidden(['user_id','id', 'created_at']);
+        return $this->success($coins);
     }
 
     public function store(Request $request)
     {
-        $user = JWTAuth::authenticate($request->bearerToken());
-        if (!$user) return $this->error(401, 'Authorization Token not found');
-
         $validator = Validator::make(
             $request->all(),
             [
@@ -53,10 +44,7 @@ class CoinController extends Controller
             'total' => $request->coin
         ]);
 
-        $coins = Coin::with(['coinTransactions'])->whereUserId($user->id)->get()->makeHidden(['user_id', 'id', 'created_at']);
-        $data = collect([
-            'coin' => $coins
-        ]);
-        return $this->success($data);
+        $coins = Coin::with(['coinTransactions'])->whereUserId(Auth()->id())->get()->makeHidden(['user_id', 'id', 'created_at']);
+        return $this->success($coins);
     }
 }

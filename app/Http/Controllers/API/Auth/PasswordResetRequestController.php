@@ -18,8 +18,6 @@ class PasswordResetRequestController extends Controller
 {
     use ApiResponse;
 
-
-
     public function sendPasswordResetEmail(Request $request)
     {
         // If email does not exist
